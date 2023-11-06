@@ -41,15 +41,16 @@
         <script>
 
             // https://www.w3schools.com/js/tryit.asp?filename=tryjs_timing_clock
-            function startTime() {
-            const today = new Date();
-            let h = today.getHours();
-            let m = today.getMinutes();
-            let s = today.getSeconds();
-            m = checkTime(m);
-            s = checkTime(s);
-            document.getElementById('clock').innerHTML =  h + ":" + m + ":" + s;
-            setTimeout(startTime, 1);
+            function startTime()
+            {
+                const today = new Date();
+                let h = today.getHours();
+                let m = today.getMinutes();
+                let s = today.getSeconds();
+                m = checkTime(m);
+                s = checkTime(s);
+                document.getElementById('clock').innerText =  h + ":" + m + ":" + s;
+                setTimeout(startTime, 1);
             }
 
             // Adds a zero in font of numbers that are lower than zero
@@ -58,10 +59,17 @@
                 if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
                 return i;
             }
+
+            // Full screen
+            function startFS()
+            {
+                document.querySelector("body").requestFullscreen();
+            }
+            
         </script>
     </head>
 
-    <body onload="startTime()">
+    <body onload="startTime()" onload="startFS">
 
         <!--The clock should occupy the whole screen-->
         <div id="clock"></div>
