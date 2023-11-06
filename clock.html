@@ -63,7 +63,8 @@
             // Full screen
             function startFS()
             {
-                document.querySelector("body").requestFullscreen();
+                let clock_element = document.getElementById("clock")
+                clock_element.addEventListener("click", () => {clock_element.requestFullscreen().catch((err) => {clock_element.exitFullscreen();})});
             }
             
         </script>
