@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Clock App</title>
+
+        <style>
+
+            /*This should make the bady itself invisible, since it will be under the clock*/
+            body
+            {
+                margin: 0;
+                padding: 0;
+                overflow: hidden; /* Hide scrollbars */
+                background-color: rgb(100, 0, 0);
+            }
+
+            /*Clock style - fullscreen and centralized*/
+            #clock
+            {
+                display: flex;
+                /*justify-content: center;*/
+                align-items: center;
+                text-align: center;
+                margin: 0;
+                min-height: 100vh;
+                min-width: 100vw;
+            }
+        
+            /*Clock style - this controls the main style*/
+            #clock
+            {
+                background-color: black;
+                color:rgb(255, 255, 255);
+                font-size: 25vw;
+                font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            }
+        </style>
+
+        <script>
+
+            // https://www.w3schools.com/js/tryit.asp?filename=tryjs_timing_clock
+            function startTime() {
+            const today = new Date();
+            let h = today.getHours();
+            let m = today.getMinutes();
+            let s = today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+            document.getElementById('clock').innerHTML =  h + ":" + m + ":" + s;
+            setTimeout(startTime, 1);
+            }
+
+            // Adds a zero in font of numbers that are lower than zero
+            function checkTime(i)
+            {
+                if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+                return i;
+            }
+        </script>
+    </head>
+
+    <body onload="startTime()">
+
+        <!--The clock should occupy the whole screen-->
+        <div id="clock"></div>
+        
+    </body>
+</html>
