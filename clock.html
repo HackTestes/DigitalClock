@@ -44,6 +44,8 @@
             function startTime()
             {
                 let today = new Date();
+                today.setTime( today.getTime() + today.getTimezoneOffset());
+
                 let h = today.getHours();
                 let m = today.getMinutes();
                 let s = today.getSeconds();
