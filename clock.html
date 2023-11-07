@@ -65,10 +65,13 @@
             function startFS()
             {
                 let clock_element = document.getElementById("clock")
-                clock_element.addEventListener("click", () => {clock_element.requestFullscreen()});
+                clock_element.addEventListener("click", () =>
+                {
+                    clock_element.requestFullscreen();
 
-                // Do not turn off screen - mostly for mobile
-                navigator.wakeLock.request('screen')
+                    // Do not turn off screen - mostly for mobile
+                    navigator.wakeLock.request('screen');
+                });
             }
             
         </script>
