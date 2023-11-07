@@ -20,7 +20,7 @@
             #clock
             {
                 display: flex;
-                /*justify-content: center;*/
+                justify-content: space-between;
                 align-items: center;
                 text-align: center;
                 margin: 0;
@@ -43,14 +43,15 @@
             // https://www.w3schools.com/js/tryit.asp?filename=tryjs_timing_clock
             function startTime()
             {
-                const today = new Date();
+                let today = new Date();
                 let h = today.getHours();
                 let m = today.getMinutes();
                 let s = today.getSeconds();
+                h = checkTime(h);
                 m = checkTime(m);
                 s = checkTime(s);
                 document.getElementById('clock').innerText =  h + ":" + m + ":" + s;
-                setTimeout(startTime, 1);
+                setTimeout(startTime, 1000);
             }
 
             // Adds a zero in font of numbers that are lower than zero
@@ -64,7 +65,10 @@
             function startFS()
             {
                 let clock_element = document.getElementById("clock")
-                clock_element.addEventListener("click", () => {clock_element.requestFullscreen().catch((err) => {clock_element.exitFullscreen();})});
+                clock_element.addEventListener("click", () => {clock_element.requestFullscreen()});
+
+                // Do not turn off screen - mostly for mobile
+                navigator.wakeLock.request('screen')
             }
             
         </script>
