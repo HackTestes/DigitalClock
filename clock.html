@@ -7,7 +7,7 @@
 
         <style>
 
-            /*This should make the body itself invisible, since it will be under the clock*/
+            /* This should make the body itself invisible, since it will be under the clock */
             body
             {
                 margin: 0;
@@ -16,7 +16,7 @@
                 background-color: rgb(100, 0, 0);
             }
 
-            /*Clock style - fullscreen and centralized*/
+            /* Clock style - fullscreen and centralized */
             #clock
             {
                 display: flex;
@@ -27,8 +27,14 @@
                 min-height: 100vh;
                 min-width: 100vw;
             }
+
+            /* Stretch text horizontally */
+            span
+            {
+                transform: scale(1, 2.5);
+            }
         
-            /*Clock style - this controls the main style*/
+            /* Clock style - this controls the main style */
             #clock
             {
                 background-color: black;
@@ -50,7 +56,7 @@
                 h = checkTime(h);
                 m = checkTime(m);
                 s = checkTime(s);
-                document.getElementById('clock').innerText =  h + ":" + m + ":" + s;
+                document.getElementById('clock_text').innerText =  h + ":" + m + ":" + s;
                 setTimeout(startTime, 1000);
             }
 
@@ -80,7 +86,9 @@
     <body onload="startTime(); startFS()">
 
         <!--The clock should occupy the whole screen-->
-        <div id="clock"></div>
+        <div id="clock">
+            <span id="clock_text"></span>
+        </div>
         
     </body>
 </html>
