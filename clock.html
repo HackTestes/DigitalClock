@@ -20,16 +20,16 @@
             #clock
             {
                 display: flex;
-                justify-content: space-between;
-                align-items: center;
+                flex-direction: column;
+                justify-content: space-evenly;
+                align-items: start;
                 text-align: center;
-                margin: 0;
                 min-height: 100vh;
                 min-width: 100vw;
             }
 
             /* Stretch text horizontally */
-            span
+            #clock_text
             {
                 transform: scale(1, 1.5);
             }
@@ -41,6 +41,13 @@
                 color:rgb(255, 255, 255);
                 font-size: 25vw;
                 font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            }
+
+            /* Date style*/
+            #date_text
+            {
+                font-size: 10vw;
+                align-self: center;
             }
         </style>
 
@@ -57,6 +64,7 @@
                 m = checkTime(m);
                 s = checkTime(s);
                 document.getElementById('clock_text').innerText =  h + ":" + m + ":" + s;
+                document.getElementById('date_text').innerText =  today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear();
                 setTimeout(startTime, 1000);
             }
 
@@ -87,6 +95,7 @@
 
         <!--The clock should occupy the whole screen-->
         <div id="clock">
+            <span id="date_text"></span>
             <span id="clock_text"></span>
         </div>
         
