@@ -7,6 +7,7 @@
 
         <style>
 
+            /* Global settings */
             /* This should make the body itself invisible, since it will be under the clock */
             body
             {
@@ -16,45 +17,110 @@
                 background-color: rgb(100, 0, 0);
             }
 
-            /* Clock style - fullscreen and centralized */
-            #clock
-            {
-                display: flex;
-                flex-direction: column;
-                justify-content: space-evenly;
-                align-items: start;
-                text-align: center;
-                min-height: 100vh;
-                min-width: 100vw;
-            }
-
-            /* Stretch text horizontally */
-            #clock_text
-            {
-                transform: scale(1, 1.5);
-            }
         
             /* Clock style - this controls the main style */
             #clock
             {
                 background-color: black;
                 color:rgb(255, 255, 255);
-                font-size: 25vw;
                 font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
             }
 
             /* Date style*/
             #date_text
             {
-                font-size: 10vw;
                 align-self: center;
+            }
+
+            /* Orientation specific styles */
+            /* Clock style - fullscreen and centralized */
+            @media screen and (orientation: landscape)
+            {
+                #clock
+                {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-evenly;
+                    align-items: start;
+                    text-align: center;
+                    min-height: 100vh;
+                    min-width: 100vw;
+                }
+
+                #clock
+                {
+                    font-size: 25vw;
+                }
+
+                /* Stretch text vertically */
+                #clock_text
+                {
+                    transform: scale(1, 1.5);
+                }
+
+                /* Date style */
+                #date_text
+                {
+                    font-size: 10vw;
+                }
+            }
+
+            @media screen and (orientation: portrait)
+            {
+                #clock
+                {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-evenly;
+                    align-items: center;
+                    text-align: center;
+                    min-height: 100vh;
+                    min-width: 100vw;
+                }
+
+                #clock
+                {
+                    font-size: 16vh;
+                }
+
+                /* Stretch text horizontally */
+                #clock_text
+                {
+                    transform: scale(1.2, 1);
+                }
+
+                #date_text
+                {
+                    font-size: 5vh;
+                }
             }
         </style>
 
         <script>
 
-            // https://www.w3schools.com/js/tryit.asp?filename=tryjs_timing_clock
+            // Weekdays PT-BR
+            const weekdays_pt_br = 
+            [
+                "Dom",
+                "Seg",
+                "Ter",
+                "Qua",
+                "Qui",
+                "Sex",
+                "Sab"
+            ];
+
+            // Global interval reference, so other function can access it
+            let interval;
+
             function startTime()
+            {
+                writeTime();
+                interval = setInterval(writeTime, 1000);
+            }
+
+            // https://www.w3schools.com/js/tryit.asp?filename=tryjs_timing_clock
+            function writeTime()
             {
                 let today = new Date();
                 let h = today.getHours();
@@ -63,9 +129,18 @@
                 h = checkTime(h);
                 m = checkTime(m);
                 s = checkTime(s);
-                document.getElementById('clock_text').innerText =  h + ":" + m + ":" + s;
-                document.getElementById('date_text').innerText =  today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear();
-                setTimeout(startTime, 1000);
+
+                if (isLandscape())
+                {
+                    document.getElementById('clock_text').innerText =  h + ":" + m + ":" + s;
+                    document.getElementById('date_text').innerText =  today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + `  ${weekdays_pt_br[today.getDay()]}`;
+                }
+                
+                if (isPortrait())
+                {
+                    document.getElementById('clock_text').innerText =  h + "\n· ·\n" + m + "\n· ·\n" + s;
+                    document.getElementById('date_text').innerText =  today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + ` ${weekdays_pt_br[today.getDay()]}`;
+                }
             }
 
             // Adds a zero in font of numbers that are lower than zero
@@ -74,6 +149,34 @@
                 if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
                 return i;
             }
+
+            function isPortrait()
+            {
+                if (window.innerHeight > window.innerWidth)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+            function isLandscape()
+            {
+                if (window.innerHeight < window.innerWidth)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+            // At every resize event, restart the timer and write the time again
+            // This avoids unecessary delays when updating the UI
+            addEventListener("resize", (event) =>
+            {
+                window.clearInterval(interval);
+                startTime();
+            });
 
             // Fullscreen
             function startFS()
