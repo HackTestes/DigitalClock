@@ -61,7 +61,7 @@
                 /* Date style */
                 #date_text
                 {
-                    font-size: 10vw;
+                    font-size: 19vh;
                 }
             }
 
@@ -76,11 +76,12 @@
                     text-align: center;
                     min-height: 100vh;
                     min-width: 100vw;
+                    line-height: 55%;
                 }
 
                 #clock
                 {
-                    font-size: 16vh;
+                    font-size: 30vh;
                 }
 
                 /* Stretch text horizontally */
@@ -91,7 +92,8 @@
 
                 #date_text
                 {
-                    font-size: 5vh;
+                    line-height: 95%;
+                    font-size: 6vh;
                 }
             }
         </style>
@@ -133,13 +135,13 @@
                 if (isLandscape())
                 {
                     document.getElementById('clock_text').innerText =  h + ":" + m + ":" + s;
-                    document.getElementById('date_text').innerText =  today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + `  ${weekdays_pt_br[today.getDay()]}`;
+                    document.getElementById('date_text').innerText =  today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + `\n ${weekdays_pt_br[today.getDay()]}`;
                 }
                 
                 if (isPortrait())
                 {
                     document.getElementById('clock_text').innerText =  h + "\n· ·\n" + m + "\n· ·\n" + s;
-                    document.getElementById('date_text').innerText =  today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + ` ${weekdays_pt_br[today.getDay()]}`;
+                    document.getElementById('date_text').innerText =  today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + `\n ${weekdays_pt_br[today.getDay()]}`;
                 }
             }
 
