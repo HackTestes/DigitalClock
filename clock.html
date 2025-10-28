@@ -15,6 +15,7 @@
                 padding: 0;
                 overflow: hidden; /* Hide scrollbars */
                 background-color: rgb(100, 0, 0);
+                user-select: none; /* Must add multiple times because fullscreen breaks it */
             }
 
         
@@ -24,12 +25,14 @@
                 background-color: black;
                 color:rgb(255, 255, 255);
                 font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+                user-select: none;
             }
 
             /* Date style*/
             #date_text
             {
                 align-self: center;
+                user-select: none;
             }
 
             /* Orientation specific styles */
