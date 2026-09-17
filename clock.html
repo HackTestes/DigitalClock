@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Clock App</title>
+        <link rel="manifest" href="./manifest.json" />
 
         <style>
 
@@ -195,7 +196,70 @@
                     navigator.wakeLock.request('screen');
                 });
             }
-            
+
+            // Service Worker code
+            if ("serviceWorker" in navigator)
+            {
+                try
+                {
+                    const registration = navigator.serviceWorker.register("./service_worker.js",{scope: "./",}).then(r=>r);
+
+                    // Always try to update
+                    if (registration != undefined)
+                    {
+                        registration.then(r => r.update());
+                    }
+
+                    if (registration.installing)
+                    {
+                        console.log("Service worker installing");
+                    }
+
+                    else if (registration.waiting)
+                    {
+                        console.log("Service worker installed");
+                    }
+
+                    else if (registration.active)
+                    {
+                        console.log("Service worker active");
+                    }
+
+                } catch (error)
+                {
+                    console.error(`Registration failed with ${error}`);
+                }
+            }
+
+
+            async function UpdateCache(time_limit_reload_ms)
+            {
+                const start_update_request = performance.now();
+
+                navigator.serviceWorker.addEventListener('message', (event) =>
+                {
+                    const time_elapsed_since_update_request = performance.now() - start_update_request;
+                    console.log(`Response received from Service Worker: ${JSON.stringify(event.data)} - ${time_elapsed_since_update_request}ms`);
+
+                    // If we get an update really fast, we can prevent the user from having to relaod the page manually
+                    // And since it was really fast, it will look like a single reload
+                    if ((time_elapsed_since_update_request <= time_limit_reload_ms) && (event.data.status == "updated"))
+                    {
+                        location.reload();
+                    }
+                });
+
+                navigator.serviceWorker.ready.then((registration) =>
+                {
+                    registration.active.postMessage({operation: "update-cache"});
+                });
+            }
+
+            // Update the cache as soon as the page loads
+            UpdateCache(500);
+
+            // Then keep trying for periods of time
+            let update_interval = setInterval(UpdateCache, 1000*60*60, 500);
         </script>
     </head>
 

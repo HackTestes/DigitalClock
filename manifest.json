@@ -1,0 +1,16 @@
+{
+    "short_name": "ClockApp",
+    "name": "Clock App",
+    "icons": [
+        {
+            "src": "./clock.svg",
+            "sizes": "512x512",
+            "type": "image/svg+xml"
+        }
+    ],
+    "start_url": "./clock.html",
+    "display_override": ["fullscreen", "minimal-ui", "standalone", "window-controls-overlay", "browser"],
+    "display": "fullscreen",
+    "theme_color": "black",
+    "background_color": "black"
+}
